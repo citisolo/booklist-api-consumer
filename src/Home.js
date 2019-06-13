@@ -3,10 +3,18 @@ import styled from 'styled-components';
 import BookList from './components/BookList';
 import { connect } from 'react-redux';
 import { fetchBooks } from './actions';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import ReactPaginate from 'react-paginate';
 
 const HomeWrapper = styled.div`
-    margin: 10em;
+    margin: auto 12em auto 12em;
+    @media (max-width: 500px) {
+        margin: 0;
+    } 
+`;
+
+const ListWrapper = styled.div`
+
 `;
 
 const PagerWrapper = styled.div`
@@ -24,64 +32,87 @@ const PagerWrapper = styled.div`
     li:hover {
         background-color: blue;
     }
-`
+    
+`;
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        const { page, itemsPerPage } = this.props.match.params;
+        console.log(page);
         this.state = {
-            page: '1',
-            pageCount: 100,
+            page: page ? page : '1',
+            itemsPerPage: itemsPerPage ? itemsPerPage : '20',
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(fetchBooks({page: '1', itemsPerPage:'20'}));
+        const { page, itemsPerPage } = this.state;
+        dispatch(fetchBooks({ page, itemsPerPage }));
     }
 
-    handlePageClick = e => {
-        e.preventDefault();
-        const { dispatch } = this.props;
-        dispatch(fetchBooks({page: '1', itemsPerPage:'20'}));
+    handlePageClick = data => {
+        const { itemsPerPage } = this.state;
+        const page = data.selected.toString(10);
+
+        this.setState({ page }, () => {
+            this.props.dispatch(fetchBooks({ page, itemsPerPage }))
+        });
+
+        this.props.history.push(`/${page}/${itemsPerPage}`);
+
     }
 
-    render(){
-      const { isFetching, items } = this.props;
+    render() {
+        const { isFetching, items } = this.props;
+        //calculate the page count
+        let pageCount = 0;
+        if (items.count) {
+            pageCount = Math.ceil(items.count / this.state.itemsPerPage);
+        }
 
-      return (
-        <HomeWrapper>
-            <BookList isFetching={isFetching} items={items}/>
-            <PagerWrapper>
-                <ReactPaginate 
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
-                    breakLabel={'...'}
-                    breakClassName={'break-me'}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'pages pagination'}
-                    activeClassName={'active'}
-                />
-            </PagerWrapper>
-        </HomeWrapper>
-      )
+        return (
+            <HomeWrapper>
+                {isFetching ?
+                    (
+                        <Dimmer active>
+                            <Loader />
+                        </Dimmer>
+                    ) : (
+                        <BookList items={items} />
+                    )
+                }
+                <PagerWrapper>
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                    />
+                </PagerWrapper>
+            </HomeWrapper>
+        )
     }
-  }
+}
 
 
 const mapStateToProps = state => {
-  const { bookListReducer } = state;
-  console.log(state);
-  const { isFetching, items } = bookListReducer ;
+    const { bookListReducer } = state;
+    //console.log(state);
+    const { isFetching, items } = bookListReducer;
 
-  return {
-    items,
-    isFetching,
-  }
+    return {
+        items,
+        isFetching,
+    }
 }
 
 export default connect(mapStateToProps)(Home);

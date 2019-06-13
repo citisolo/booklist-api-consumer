@@ -1,20 +1,16 @@
   
   import React from 'react';
-  import { List, Segment, Dimmer, Loader, Button } from 'semantic-ui-react';
+  import { List, Segment } from 'semantic-ui-react';
+  import { connect } from 'react-redux';
+  
 
+  const BookList = ( { items } ) => {
 
-  const BookList = ({isFetching, items}) => {
     return (
       <React.Fragment>
           <Segment inverted>
               <List divided inverted relaxed>
-                  { isFetching ? (
-                  <List.Item>
-                  <Dimmer active>
-                      <Loader />
-                  </Dimmer>               
-                  </List.Item>
-                  ) : (
+                  {
                       items.books.map((item, index) => {
                           return (
                           <List.Item key={index}>
@@ -25,12 +21,11 @@
                           </List.Item> 
                           )
                       })
-                  )}
+                  }
               </List>
           </Segment> 
       </React.Fragment>)
-  };
-
+  }
 
 
 export default BookList;
