@@ -3,7 +3,7 @@ export const RECEIVE_BOOKS = 'RECIEVE_BOOKS';
 
 export const requestBooks = books => ({
   type: REQUEST_BOOKS,
-  books
+  books,
 });
 
 export const receiveBooks = (books, json) => ({

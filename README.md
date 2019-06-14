@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# BookList Api Pager
-This application consumes data from a booklist api and presents the data in a paginated list. It has the following features.
+# 📖 Book-List Api Consumer
+This application consumes data from a booklist api and presents the data in a paginated list. It implements the following features;
 
 - Responsive UI
 - Api data paging 
@@ -13,25 +13,18 @@ This application consumes data from a booklist api and presents the data in a pa
 - styled-components 
 - semantic-react-ui 
 - react-paginate 
+- eslint
+- node-sass(for compiling bootstrap theme)
   
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
 
 ### `npm run compile-sass`
 
-Compiles the custom Bootstrap theme to the `public` folder.
+Compiles the custom Bootstrap theme to the `public/css` folder.
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
