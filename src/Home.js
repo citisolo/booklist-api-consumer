@@ -65,7 +65,8 @@ class Home extends React.Component {
 
   handlePageClick = data => {
     const { itemsPerPage, filter } = this.state;
-    const page = data.selected.toString(10);
+    const pageNum = data.selected + 1;
+    const page = pageNum.toString(10);
 
     this.setState({ page }, () => {
       this.props.dispatch(fetchBooks({ page, itemsPerPage, filter }))
