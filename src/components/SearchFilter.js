@@ -18,16 +18,16 @@ class SearchFilter extends React.Component {
         }
     }
 
-    handleKeyPress = (event) => {
+    handleKeyPress = event => {
         //event.preventDefault();
         const { handleSearch } = this.props;
         if (event.key === 'Enter') {
-            handleSearch({ type: "all", values : [this.state.text]});
-            this.setState({text: ""});
+            handleSearch({ type: "all", values: [this.state.text] });
+            this.setState({ text: "" });
         }
     }
 
-    handleChange = (event) => {
+    handleChange = event => {
         event.preventDefault();
         const val = event.target.value;
         this.setState({ text: val });
