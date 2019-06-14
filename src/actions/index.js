@@ -13,11 +13,20 @@ export const receiveBooks = (books, json) => ({
 });
 
 export const fetchBooks = books => dispatch => {
+    console.log(books);
     dispatch(requestBooks(books));
-    const url = `http://nyx.vima.ekt.gr:3000/api/books/?page=${books.page}/&itemsPerPage=${books.itemsPerPage}`;
+    const url = `http://nyx.vima.ekt.gr:3000/api/books/`;
     return fetch(
         url, 
-        { method: 'POST' } )
+        { 
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              page: books.page,
+              //itemsPerPage: books.itemsPerPage,
+              filter: books.filter
+            }),
+        } )
         .then(response => response.json())
         .then(json => dispatch(receiveBooks(books, json)))
         .catch(response => console.log(`response: ${response}`))

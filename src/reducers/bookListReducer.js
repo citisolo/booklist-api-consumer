@@ -6,7 +6,6 @@ export default (state = { isfetching: false, items: {books:[]} }, action) => {
             return {
               ...state,
               isFetching: true,
-              didInvalidate: false
             }
           case RECEIVE_BOOKS:
             return {
