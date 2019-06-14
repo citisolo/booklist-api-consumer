@@ -37,7 +37,7 @@ const PagerWrapper = styled.div`
     }
 
     li:hover {
-        background-color: blue;
+        /*background-color: blue;*/
     }
     
 `;
