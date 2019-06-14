@@ -22,6 +22,7 @@ const HomeWrapper = styled.div`
 const ListWrapper = styled.div`
     height: 600px;
     overflow-y: auto;
+    margin-top: 1em;
 `;
 
 
