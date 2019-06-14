@@ -33,9 +33,7 @@ const PagerWrapper = styled.div`
 
     li {
         display: inline-block;
-        border-style: solid;
         padding: 0.8rem;
-        border-width: 0.1px;
     }
 
     li:hover {
